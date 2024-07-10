@@ -13,7 +13,6 @@ public class UserServiceTest {
     private final String testLastName = "Ivanov";
     private final byte testAge = 5;
 
-
     @Test
     public void dropUsersTable() {
         try {
@@ -90,7 +89,6 @@ public class UserServiceTest {
             userService.createUsersTable();
             userService.saveUser(testName, testLastName, testAge);
             userService.cleanUsersTable();
-
             if (userService.getAllUsers().size() != 0) {
                 Assert.fail("Метод очищения таблицы пользователей реализован не корректно");
             }
@@ -98,5 +96,4 @@ public class UserServiceTest {
             Assert.fail("При тестировании очистки таблицы пользователей произошло исключение\n" + e);
         }
     }
-
 }
