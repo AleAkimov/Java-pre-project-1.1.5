@@ -8,11 +8,13 @@ import java.util.ArrayList;
 import java.util.List;
 
 
-public class UserDaoJDBCImpl extends Util implements UserDao {
+public class UserDaoJDBCImpl implements UserDao {
+    private final Connection connection=Util.getConnection();
+
     public UserDaoJDBCImpl() {
     }
 
-    public void createUsersTable() throws SQLException, ClassNotFoundException {
+    public void createUsersTable() {
 
         try (Connection conn = Util.getConnection();
              Statement statement = conn.createStatement()) {
@@ -32,7 +34,7 @@ public class UserDaoJDBCImpl extends Util implements UserDao {
              Statement statement = conn.createStatement()) {
             String sql = "DROP TABLE IF EXISTS new_schema.users";
             statement.execute(sql);
-                    } catch (SQLException | ClassNotFoundException e) {
+                    } catch (SQLException e) {
             throw new RuntimeException(e);
         }
     }
@@ -43,7 +45,7 @@ public class UserDaoJDBCImpl extends Util implements UserDao {
             String sql = "INSERT INTO new_schema.users (NAME, LASTNAME, AGE) VALUES('" + name + "', '" + lastName + "', " + age + ")";
             statement.execute(sql);
             System.out.println("User c именем - " + name + " добавлен в базу данных");
-        } catch (SQLException | ClassNotFoundException e) {
+        } catch (SQLException  e) {
             throw new RuntimeException(e);
         }
     }
@@ -53,7 +55,7 @@ public class UserDaoJDBCImpl extends Util implements UserDao {
              Statement statement = conn.createStatement()) {
             String sql = "delete from new_schema.users where id=1";
             statement.execute(sql);
-        } catch (SQLException | ClassNotFoundException e) {
+        } catch (SQLException  e) {
             throw new RuntimeException(e);
         }
     }
@@ -73,7 +75,7 @@ public class UserDaoJDBCImpl extends Util implements UserDao {
                 user.setId(id);
                 users.add(user);
             }
-        } catch (SQLException | ClassNotFoundException e) {
+        } catch (SQLException  e) {
             throw new RuntimeException(e);
         }
         return users;
@@ -85,7 +87,7 @@ public class UserDaoJDBCImpl extends Util implements UserDao {
             String sql = "DELETE FROM new_schema.users";
 
             statement.execute(sql);
-        } catch (SQLException | ClassNotFoundException e) {
+        } catch (SQLException e) {
             throw new RuntimeException(e);
         }
     }

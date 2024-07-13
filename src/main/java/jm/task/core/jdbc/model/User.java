@@ -1,22 +1,27 @@
 package jm.task.core.jdbc.model;
 
-import javax.persistence.Column;
-import javax.persistence.Id;
-import javax.persistence.Table;
+import javax.persistence.*;
 
-@Table
+@Table(name = "users")
+@Entity
 public class User {
     @Id
+    @GeneratedValue(strategy = GenerationType.IDENTITY)
+    @Column(name = "id")
     private Long id;
 
-    @Column
+    @Column(name = "name")
     private String name;
 
-    @Column
+    @Column(name = "last_name")
     private String lastName;
 
-    @Column
+    @Column(name = "age")
     private Byte age;
+
+    public User() {
+
+    }
 
     public User(String name, String lastName, Byte age) {
         this.name = name;
@@ -24,16 +29,32 @@ public class User {
         this.age = age;
     }
 
+    public Long getId() {
+        return id;
+    }
+
     public void setId(Long id) {
         this.id = id;
+    }
+
+    public String getName() {
+        return name;
     }
 
     public void setName(String name) {
         this.name = name;
     }
 
+    public String getLastName() {
+        return lastName;
+    }
+
     public void setLastName(String lastName) {
         this.lastName = lastName;
+    }
+
+    public Byte getAge() {
+        return age;
     }
 
     public void setAge(Byte age) {
@@ -41,28 +62,28 @@ public class User {
     }
 
     @Override
+    public boolean equals(Object obj) {
+        if (obj == null) {
+            return false;
+        }
+        if (obj == this) {
+            return true;
+        }
+        if (getClass() != obj.getClass()) {
+            return false;
+        }
+        User u = (User) obj;
+        return (this.getId() == u.getId());
+    }
+
+    @Override
+    public int hashCode() {
+        return (int) (1 + 31 * getId());
+    }
+
+    @Override
     public String toString() {
-        return "User{" +
-                "ID=" + id +
-                ", NAME='" + name + '\'' +
-                ", LASTNAME='" + lastName + '\'' +
-                ", AGE=" + age +
-                '}';
+        return name + " " + lastName + " " + age;
     }
 
-    public String getName() {
-        return this.name;
-    }
-
-    public String getLastName() {
-        return this.lastName;
-    }
-
-    public Byte getAge() {
-        return this.age;
-    }
-
-    public Long getId() {
-        return id;
-    }
 }
