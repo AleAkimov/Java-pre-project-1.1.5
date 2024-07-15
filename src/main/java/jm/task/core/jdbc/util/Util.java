@@ -11,7 +11,9 @@ import java.sql.DriverManager;
 import java.sql.SQLException;
 
 public class Util {
-
+    private static final String hibernateUsername = "root";
+    private static final String hibernatePassword = "root";
+    private static final String hibernateUrl = "jdbc:mysql://localhost:3306/new_schema";
     private static SessionFactory sessionFactory;
 
     public static SessionFactory getSessionFactory() {
@@ -19,9 +21,9 @@ public class Util {
             try {
                 Configuration configuration = new Configuration();
                 configuration.addAnnotatedClass(User.class);
-                configuration.setProperty("hibernate.connection.username", "root");
-                configuration.setProperty("hibernate.connection.password", "root");
-                configuration.setProperty("hibernate.connection.url", "jdbc:mysql://localhost:3306/new_schema");
+                configuration.setProperty("hibernate.connection.username", hibernateUsername);
+                configuration.setProperty("hibernate.connection.password", hibernatePassword);
+                configuration.setProperty("hibernate.connection.url", hibernateUrl);
                 ServiceRegistry serviceRegistry = new StandardServiceRegistryBuilder()
                         .applySettings(configuration.getProperties()).build();
                 MetadataSources metadataSources = new MetadataSources(serviceRegistry);
