@@ -15,6 +15,7 @@ public class UserDaoHibernateImpl implements UserDao {
     public  UserDaoHibernateImpl (){
 
     }
+
     @Override
     public void createUsersTable() {
         String sql = "CREATE TABLE IF NOT EXISTS users" +
@@ -55,10 +56,12 @@ public class UserDaoHibernateImpl implements UserDao {
 
     @Override
     public void removeUserById(long id) {
+
         try (Session session = sessionFactory.openSession()) {
             transaction = session.beginTransaction();
-            if (session.get(User.class, id) != null) {
-                session.delete(session.get(User.class, id));
+            User user = session.get(User.class, id);
+            if (user != null) {
+                session.delete(user);
             }
             session.getTransaction().commit();
         } catch (HibernateException e) {
